@@ -23,6 +23,7 @@
   <div class="form-group">
       <label for="categorySelect">Selecione a categoria :</label>
       <select id="categorySelect" class="form-control">
+        <option value="" disabled selected>Selecione uma categoria</option>
           <% for (const categoryRow of categorias) { %>
               <% const category = categoryRow[0]; %>
               <option value="<%= category %>"><%= category %></option>
