@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca peças</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+ <div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 sidebar">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link" href="/menu"> ↩ Menu</a>
+        </li>
+        
+      </ul>
+    </div>
+
+ <div class="container mt-3">
+  <div class="form-group">
+      <label for="categorySelect">Selecione a categoria :</label>
+      <select id="categorySelect" class="form-control">
+          <% for (const categoryRow of categorias) { %>
+              <% const category = categoryRow[0]; %>
+              <option value="<%= category %>"><%= category %></option>
+          <% } %>
+      </select>
+  </div>
+    
+    <div id="partTableContainer" style="display: none;">
+        <input type="text" id="searchInput" class="form-control mb-3" placeholder="referência/nome">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Referência</th>
+                </tr>
+            </thead>
+            <tbody id="partTableBody">
+                <!-- Table rows will be added here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    $("#categorySelect").on("change", function() {
+        const selectedCategory = $(this).val();
+        if (selectedCategory) {
+            $.ajax({
+                type: "GET",
+                url: "/getParts",
+                data: { category: selectedCategory },
+                success: function(parts) {
+                    // Clear previous table rows
+                    $("#partTableBody").empty();
+                    // Populate the table with parts data
+                    parts.forEach(function(part) {
+                        $("#partTableBody").append(
+                            `<tr>
+                                <td>${part.name}</td>
+                                <td>${part.reference}</td>
+                            </tr>`
+                        );
+                    });
+                    // Show the table
+                    $("#partTableContainer").show();
+                }
+            });
+        } else {
+            $("#partTableContainer").hide();
+        }
+    });
+
+    // Search functionality
+    $("#searchInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("table tbody tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+
+    function handleRowClick(partName, partReference, partCategory) {
+        // Construct the URL for the new page, you can modify the path as needed
+        const url = `/form?name=${encodeURIComponent(partName)}&reference=${encodeURIComponent(partReference)}&category=${encodeURIComponent(partCategory)}`;
+        // Navigate to the new page
+        window.location.href = url;
+    }
+
+    $(document).ready(function() {
+        // Event listener for the table rows
+        $("table tbody").on("click", "tr", function() {
+            // Get the data from the clicked row
+            const partName = $(this).find("td:eq(0)").text();
+            const partReference = $(this).find("td:eq(1)").text();
+            const partCategory = $("#categorySelect").val();
+            // Call the function to handle the row click
+            handleRowClick(partName, partReference, partCategory);
+        });
+       });
+</script>
+
+</body>
+</html>

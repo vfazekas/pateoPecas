@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Menu Pateo</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+body {
+  margin: 0px;
+  padding: 0px;
+  font-family: "Courier Prime", monospace;
+  background-color: #fdfdfe;
+}
+
+
+ h1 {
+  font-size: 50px;
+  font-weight: 500;
+  color: #553c9a;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+
+     h4 {
+      padding-top: 20px;
+      text-align: center;
+      padding-bottom: 20px;
+    }
+    
+    #sidePage {
+      position: relative;
+      z-index: 0;
+      text-align: center;
+    }
+    
+    #sidePage::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://res.cloudinary.com/diz14smvb/image/upload/v1689855037/D_NQ_NP_663861-MLB54845332507_042023-O-removebg-preview_nwqfpb.png');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.4; /* Adjust the opacity value as needed */
+      z-index: -1;
+    }
+    
+    .sidebar {
+      background-color: #f8f9fa;
+      height: 100vh;
+      width: 200px;
+    }
+    
+    .content {
+      padding: 20px;
+    }
+    
+    .centered-title {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 sidebar">
+        <h4>Menu <%= user.Filial %></h4>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href='/form' >
+              <img src="pistons.gif" alt="piston_icon" width="35" height="35">
+                  Registrar venda perdida
+              </a>    
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href='/table' >
+                <img src="search.gif" alt="search_icon" width="35" height="35">
+                Ver peças cadastradas
+                </a>    
+              </li>
+        </ul>
+      </div>
+      <div class="col-sm-9 content" id="sidePage">
+        <div class="header">
+          <h1 class="ml-5 mt-3">Controle de vendas perdidas</b>!</h1> 
+        </div>        
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
